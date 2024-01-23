@@ -81,19 +81,25 @@ button:active {
     text-align: center; 
 }
 
+.detailsContainer {
+    margin-top: -5px;
+}
+
 .item {
     background-color: #b0dbb0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%; 
-    margin-bottom: 5px;
+    width: 100%;
+    margin-top: 5px;
     border-radius: 10px;
-    cursor: pointer; 
+    cursor: pointer;
     user-select: none;
-
-
 }
+
+
+
+
 .status {
     min-height: 20px;
     color: red;
@@ -108,13 +114,10 @@ button:active {
     background-color: #6cc66c; 
 }
 
-#detailsContainer {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    scrollbar-color: transparent transparent;
-    overflow-y: scroll; 
-}
 
-#detailsContainer::-webkit-scrollbar {
-    display: none;
-  }
+.sorting-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
