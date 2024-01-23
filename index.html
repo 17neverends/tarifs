@@ -9,21 +9,35 @@
 <body> 
     <div class="main">
         <h1>Тип доставки</h1>
+        
+        <div class="sorting-buttons">
+            <label for="sortSelect">Сортировать по: </label>
+            <select id="sortSelect">
+                <option value="default">по умолчанию</option>
+                <option value="cost">стоимости</option>
+                <option value="time">сроку</option>
+            </select>
+        </div>
+        
+        
+    
         <div class="tarifs">
             <div class="labels">
                 <p>Вид</p>
                 <p>Стоимость</p>
                 <p>Срок</p>
             </div>
-
+    
             <div id="detailsContainer" class="details">
                 <div class="item"></div>
             </div>
+            
         </div>
         <p class="status"></p>
         <button type="button" id="confirm">Принять</button>
         <button type="button" id="back">Назад</button>
     </div>
+    
     <script src="/static/tarifs/main.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>  
 </body>
