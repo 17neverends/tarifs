@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расчет накладной</title>
+    <link rel="stylesheet" href="/static/tarifs/style.css">
+</head>
+<body> 
+    <div class="main">
+        <h1>Тип доставки</h1>
+        <div class="tarifs">
+            <div class="labels">
+                <p>Вид</p>
+                <p>Стоимость</p>
+                <p>Срок</p>
+            </div>
+
+            <div id="detailsContainer" class="details">
+                <div class="item"></div>
+            </div>
+        </div>
+        <p class="status"></p>
+        <button type="button" id="confirm">Принять</button>
+        <button type="button" id="back">Назад</button>
+    </div>
+    <script src="/static/tarifs/main.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>  
+</body>
+</html>
