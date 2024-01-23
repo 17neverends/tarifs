@@ -1,92 +1,131 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let detailsContainer = document.getElementById("detailsContainer");
-    let selectedDetails;
-    let statusParagraph = document.querySelector(".status");
+    const detailsContainer = document.getElementById("detailsContainer");
+    const statusParagraph = document.querySelector(".status");
+    let selectedType;
+    let selectedDetail = null;
 
-    let details = {
+    const details = {
         "details": [
-            {
-                "type": "Дверь - дверь",
-                "cost": "1000р.",
-                "datetime": "1-2 раб.д"
-            },
-            {
-                "type": "Дверь - склад",
-                "cost": "2000р.",
-                "datetime": "2-3 раб.д"
-            },
-            {
-                "type": "Склад - дверь",
-                "cost": "3000р.",
-                "datetime": "3-4 раб.д"
-            },
-            {
-                "type": "Склад - склад",
-                "cost": "4000р.",
-                "datetime": "4-5 раб.д"
-            },
-            {
-                "type": "Дверь - дверь",
-                "cost": "1000р.",
-                "datetime": "1-2 раб.д"
-            },
-            {
-                "type": "Дверь - склад",
-                "cost": "2000р.",
-                "datetime": "2-3 раб.д"
-            },
-            {
-                "type": "Склад - дверь",
-                "cost": "3000р.",
-                "datetime": "3-4 раб.д"
-            },
-            {
-                "type": "Склад - склад",
-                "cost": "4000р.",
-                "datetime": "4-5 раб.д"
-            }
+            { "type": "Дверь1 - дверь1", "cost": "100р.", "datetime": "1-3 раб.д" },
+            { "type": "Дверь1 - склад1", "cost": "2000р.", "datetime": "2-7 раб.д" },
+            { "type": "Склад1 - дверь1", "cost": "3000р.", "datetime": "3-4 раб.д" },
+            { "type": "Склад1 - склад1", "cost": "400р.", "datetime": "4-5 раб.д" },
+            { "type": "Дверь2 - дверь2", "cost": "1500р.", "datetime": "1-2 раб.д" },
+            { "type": "Дверь2 - склад2", "cost": "2000р.", "datetime": "2-5 раб.д" },
+            { "type": "Склад2 - дверь2", "cost": "3000р.", "datetime": "3-4 раб.д" },
+            { "type": "Склад2 - склад2", "cost": "4000р.", "datetime": "4-5 раб.д" },
+            { "type": "Дверь3 - дверь3", "cost": "1000р.", "datetime": "1-2 раб.д" },
+            { "type": "Дверь3 - склад3", "cost": "2000р.", "datetime": "2-3 раб.д" },
+            { "type": "Склад3 - дверь3", "cost": "30000р.", "datetime": "7-8 раб.д" },
+            { "type": "Склад3 - склад3", "cost": "4000р.", "datetime": "4-5 раб.д" }
         ]
     };
 
-    details.details.forEach(function (detail, index) {
-        let itemDiv = document.createElement("div");
+    function createDetailItem(detail) {
+        const itemDiv = document.createElement("div");
         itemDiv.classList.add("item");
-        let typeP = document.createElement("p");
-        typeP.textContent = detail.type;
-        let costP = document.createElement("p");
-        costP.textContent = detail.cost;
-        let datetimeP = document.createElement("p");
-        datetimeP.textContent = detail.datetime;
-        itemDiv.appendChild(typeP);
-        itemDiv.appendChild(costP);
-        itemDiv.appendChild(datetimeP);
+
+        const createAndAppend = (tag, text) => {
+            const element = document.createElement(tag);
+            element.textContent = text;
+            itemDiv.appendChild(element);
+        };
+
+        createAndAppend("p", detail.type);
+        createAndAppend("p", detail.cost);
+        createAndAppend("p", detail.datetime);
+
         itemDiv.addEventListener("click", function () {
-            if (selectedDetails === itemDiv) {
+            if (selectedType === detail.type) {
                 itemDiv.classList.remove("selected");
-                selectedDetails = null;
+                selectedType = null;
+                selectedDetail = null;
             } else {
-                if (selectedDetails) {
-                    selectedDetails.classList.remove("selected");
+                if (selectedDetail) {
+                    selectedDetail.classList.remove("selected");
                 }
                 itemDiv.classList.add("selected");
-                selectedDetails = itemDiv;
+                selectedType = detail.type;
+                selectedDetail = itemDiv;
             }
         });
-        detailsContainer.appendChild(itemDiv);
 
-        if (index === 5 && details.details.length > 6) {
-            detailsContainer.style.overflowY = "scroll";
-            detailsContainer.style.maxHeight = "225px";
+        return itemDiv;
+    }
+
+    function sortByCost() {
+        detailsContainer.innerHTML = "";
+        details.details
+            .slice()
+            .sort((a, b) => parseInt(a.cost) - parseInt(b.cost))
+            .forEach(function (detail) {
+                const itemDiv = createDetailItem(detail);
+                detailsContainer.appendChild(itemDiv);
+                    if (selectedType === detail.type) {
+                    itemDiv.classList.add("selected");
+                    selectedDetail = itemDiv;
+                }
+            });
+    }
+    
+    function sortByTime() {
+        detailsContainer.innerHTML = "";
+        details.details
+            .slice()
+            .sort((a, b) => {
+                const aTime = a.datetime.split(" ")[0].split("-").map(num => parseInt(num));
+                const bTime = b.datetime.split(" ")[0].split("-").map(num => parseInt(num));
+    
+                if (aTime[0] !== bTime[0]) {
+                    return aTime[0] - bTime[0];
+                } else {
+                    return aTime[1] - bTime[1];
+                }
+            })
+            .forEach(function (detail) {
+                const itemDiv = createDetailItem(detail);
+                detailsContainer.appendChild(itemDiv);
+                    if (selectedType === detail.type) {
+                    itemDiv.classList.add("selected");
+                    selectedDetail = itemDiv;
+                }
+            });
+    }
+    
+    function resetFilters() {
+        detailsContainer.innerHTML = "";
+        details.details.forEach(function (detail) {
+            const itemDiv = createDetailItem(detail);
+            detailsContainer.appendChild(itemDiv);
+                if (selectedType === detail.type) {
+                itemDiv.classList.add("selected");
+                selectedDetail = itemDiv;
+            }
+        });
+    }
+    
+
+    details.details.forEach(function (detail) {
+        const itemDiv = createDetailItem(detail);
+        detailsContainer.appendChild(itemDiv);
+    });
+
+    document.getElementById("sortSelect").addEventListener("change", function (event) {
+        const selectedOption = event.target.value;
+        if (selectedOption === "default") {
+            resetFilters();
+        } else if (selectedOption === "cost") {
+            sortByCost();
+        } else if (selectedOption === "time") {
+            sortByTime();
         }
     });
 
-
-    let confirmButton = document.getElementById("confirm");
-    confirmButton.addEventListener("click", function () {
-        if (!selectedDetails) {
+    document.getElementById("confirm").addEventListener("click", function () {
+        if (!selectedType) {
             statusParagraph.textContent = "Выберите тариф";
         } else {
-            statusParagraph.textContent = "Тариф выбран: " + selectedDetails.querySelector("p").textContent;
+            statusParagraph.textContent = "Тариф выбран: " + selectedType;
         }
     });
 });
