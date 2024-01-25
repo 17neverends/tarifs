@@ -31,7 +31,7 @@ body::-webkit-scrollbar {
     max-width: 400px;
     width: 100%;
     margin: auto;
-    height: 1000px;     
+    height: 1300px;     
     min-height: 100px;
 }
 
@@ -85,6 +85,12 @@ button:active {
     margin-top: -5px;
 }
 
+.sorting-buttons select {
+    font-family: inherit;
+    font-size: 15px;
+
+}
+
 .item {
     background-color: #b0dbb0;
     display: flex;
@@ -111,7 +117,7 @@ button:active {
 }
 
 .selected {
-    background-color: #6cc66c; 
+    background-color: #1ab248; 
 }
 
 

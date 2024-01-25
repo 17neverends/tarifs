@@ -3,7 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const statusParagraph = document.querySelector(".status");
     let selectedType;
     let selectedDetail = null;
-
+    fetch("/get_auth_webapp")
+    .then(response => response.json())
+    .then(data => {
+        const authWebappValue = data.auth_webapp;
+        console.log(authWebappValue);
+    })
+    .catch(error => console.error("Error fetching auth_webapp:", error));
     const details = {
         "details": [
             { "type": "Дверь1 - дверь1", "cost": "100р.", "datetime": "1-3 раб.д" },
